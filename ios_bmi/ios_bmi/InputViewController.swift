@@ -58,6 +58,11 @@ class ViewController: UIViewController {
         labelBmiValue.text = "保存する"
     }
     
+    // 入力エリア以外をタップするとキーボードを閉じる
+    @IBAction func tapView(_ sender: UITapGestureRecognizer) {
+        view.endEditing(true)
+    }
+    
     private func bmiCalculate(heightCm: Double, weight: Double) -> Double {
         let heightM = heightCm / 100
         let bmi = weight / pow(heightM, 2)
