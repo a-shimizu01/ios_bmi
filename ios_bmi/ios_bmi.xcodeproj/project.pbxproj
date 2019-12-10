@@ -7,8 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6E6CF018238CCCF500235A87 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E6CF017238CCCF500235A87 /* TabBarController.swift */; };
+		6E6CF01A238CD07400235A87 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E6CF019238CD07400235A87 /* ListViewController.swift */; };
 		6EBD7ED8237BA97300D2481D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EBD7ED7237BA97300D2481D /* AppDelegate.swift */; };
-		6EBD7EDA237BA97300D2481D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EBD7ED9237BA97300D2481D /* ViewController.swift */; };
+		6EBD7EDA237BA97300D2481D /* InputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EBD7ED9237BA97300D2481D /* InputViewController.swift */; };
 		6EBD7EDD237BA97300D2481D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6EBD7EDB237BA97300D2481D /* Main.storyboard */; };
 		6EBD7EDF237BA97400D2481D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6EBD7EDE237BA97400D2481D /* Assets.xcassets */; };
 		6EBD7EE2237BA97400D2481D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6EBD7EE0237BA97400D2481D /* LaunchScreen.storyboard */; };
@@ -34,9 +36,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6E6CF017238CCCF500235A87 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		6E6CF019238CD07400235A87 /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		6EBD7ED4237BA97300D2481D /* ios_bmi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ios_bmi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6EBD7ED7237BA97300D2481D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		6EBD7ED9237BA97300D2481D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		6EBD7ED9237BA97300D2481D /* InputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputViewController.swift; sourceTree = "<group>"; };
 		6EBD7EDC237BA97300D2481D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		6EBD7EDE237BA97400D2481D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6EBD7EE1237BA97400D2481D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -98,11 +102,13 @@
 			isa = PBXGroup;
 			children = (
 				6EBD7ED7237BA97300D2481D /* AppDelegate.swift */,
-				6EBD7ED9237BA97300D2481D /* ViewController.swift */,
+				6EBD7ED9237BA97300D2481D /* InputViewController.swift */,
 				6EBD7EDB237BA97300D2481D /* Main.storyboard */,
 				6EBD7EDE237BA97400D2481D /* Assets.xcassets */,
 				6EBD7EE0237BA97400D2481D /* LaunchScreen.storyboard */,
 				6EBD7EE3237BA97400D2481D /* Info.plist */,
+				6E6CF017238CCCF500235A87 /* TabBarController.swift */,
+				6E6CF019238CD07400235A87 /* ListViewController.swift */,
 			);
 			path = ios_bmi;
 			sourceTree = "<group>";
@@ -256,7 +262,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6EBD7EDA237BA97300D2481D /* ViewController.swift in Sources */,
+				6E6CF018238CCCF500235A87 /* TabBarController.swift in Sources */,
+				6EBD7EDA237BA97300D2481D /* InputViewController.swift in Sources */,
+				6E6CF01A238CD07400235A87 /* ListViewController.swift in Sources */,
 				6EBD7ED8237BA97300D2481D /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -433,6 +441,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 4964UT34BM;
 				INFOPLIST_FILE = ios_bmi/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -451,6 +460,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 4964UT34BM;
 				INFOPLIST_FILE = ios_bmi/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
