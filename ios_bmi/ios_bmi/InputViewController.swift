@@ -15,6 +15,9 @@ class InputViewController: UIViewController {
     @IBOutlet weak var labelBmiValue: UILabel!
     @IBOutlet weak var textViewExplanation: UITextView!
     
+    static let MONTH_LIST_KEY = "month_list"
+    
+    static let DATE_KEY = "date"
     static let HEIGHT_KEY = "height"
     static let WEIGHT_KEY = "weight"
     static let BMI_KEY = "bmi"
@@ -63,16 +66,25 @@ class InputViewController: UIViewController {
         // アラートダイアログ エラーで落ちるので一旦保留
 //        showAlertDialog(title: "エラー", message: "BMI値が未入力です。")
         
-        // データ保存用Dictionary
-        let dataDictionary = [InputViewController.HEIGHT_KEY: textFieldHeight.text, InputViewController.WEIGHT_KEY: textFieldWeight.text, InputViewController.BMI_KEY: labelBmiValue.text, InputViewController.EXPLANATION_KEY: textViewExplanation.text]
-        
         // 現在日付取得
-        let formatter = DateFormatter()
-        formatter.dateFormat = DateFormatter.dateFormat(fromTemplate: "ydMMM", options: 0, locale: Locale(identifier: "ja_JP"))
-        let todayDateStr = formatter.string(from: Date())
+        let formatterMonth = DateFormatter()
+        formatterMonth.dateFormat = "yyyy年M月"
+        let todayMonthStr = formatterMonth.string(from: Date())
         
-        // 現在日付をキーにDictionaryを保存する
-        UserDefaults.standard.set(dataDictionary, forKey: todayDateStr)
+        formatterMonth.dateFormat = "d日"
+        let todayDateStr = formatterMonth.string(from: Date())
+        
+        // データ保存用Dictionary
+        let dataDictionary = [InputViewController.DATE_KEY: todayDateStr, InputViewController.HEIGHT_KEY: textFieldHeight.text ?? "", InputViewController.WEIGHT_KEY: textFieldWeight.text ?? "", InputViewController.BMI_KEY: labelBmiValue.text ?? "", InputViewController.EXPLANATION_KEY: textViewExplanation.text ?? ""]
+        
+        if var thisMonthDataArray = UserDefaults.standard.array(forKey: todayMonthStr) as? [[String: String]] {
+            // 今月のデータがすでに登録済みの場合は、データを追加して上書き登録する
+            thisMonthDataArray += [dataDictionary]
+            UserDefaults.standard.set(thisMonthDataArray, forKey: todayMonthStr)
+        } else {
+            // 登録済みでない場合は新規登録する
+            UserDefaults.standard.set([dataDictionary], forKey: todayMonthStr)
+        }
         
         // アラートダイアログ エラーで落ちるので一旦保留）（保存しましたってダイアログ出るようにしたいなぁ）
         labelBmiValue.text = "保存完了"
@@ -80,30 +92,31 @@ class InputViewController: UIViewController {
     
     // テスト用メソッド 複数件のBMI計算結果のテストデータを保存する
     func saveBmiTestData() {
-        let testDataKey1 = "2019年10月10日"
-        let testDataDictionary1 = [InputViewController.HEIGHT_KEY: "160.0", InputViewController.WEIGHT_KEY: "55.0", InputViewController.BMI_KEY: "21.48", InputViewController.EXPLANATION_KEY: "10月1日目です。"]
+        let sectionKey1 = "2019年10月"
+        let testDataDictionary1 = [InputViewController.DATE_KEY: "10日", InputViewController.HEIGHT_KEY: "160.0", InputViewController.WEIGHT_KEY: "55.0", InputViewController.BMI_KEY: "21.48", InputViewController.EXPLANATION_KEY: "10月1日目です。"]
         
-        let testDataKey2 = "2019年10月25日"
-        let testDataDictionary2 = [InputViewController.HEIGHT_KEY: "160.1", InputViewController.WEIGHT_KEY: "55.1", InputViewController.BMI_KEY: "21.49", InputViewController.EXPLANATION_KEY: "10月2日目です。"]
+        let testDataDictionary2 = [InputViewController.DATE_KEY: "25日", InputViewController.HEIGHT_KEY: "160.1", InputViewController.WEIGHT_KEY: "55.1", InputViewController.BMI_KEY: "21.49", InputViewController.EXPLANATION_KEY: "10月2日目です。"]
         
-        let testDataKey3 = "2019年11月15日"
-        let testDataDictionary3 = [InputViewController.HEIGHT_KEY: "160.2", InputViewController.WEIGHT_KEY: "55.2", InputViewController.BMI_KEY: "21.50", InputViewController.EXPLANATION_KEY: "11月1日目です。"]
+        let sectionKey2 = "2019年11月"
+        let testDataDictionary3 = [InputViewController.DATE_KEY: "15日", InputViewController.HEIGHT_KEY: "160.2", InputViewController.WEIGHT_KEY: "55.2", InputViewController.BMI_KEY: "21.50", InputViewController.EXPLANATION_KEY: "11月1日目です。"]
         
-        let testDataKey4 = "2019年11月20日"
-        let testDataDictionary4 = [InputViewController.HEIGHT_KEY: "160.3", InputViewController.WEIGHT_KEY: "55.3", InputViewController.BMI_KEY: "21.52", InputViewController.EXPLANATION_KEY: "11月2日目です。"]
+        let testDataDictionary4 = [InputViewController.DATE_KEY: "20日", InputViewController.HEIGHT_KEY: "160.3", InputViewController.WEIGHT_KEY: "55.3", InputViewController.BMI_KEY: "21.52", InputViewController.EXPLANATION_KEY: "11月2日目です。"]
         
-        let testDataKey5 = "2019年12月3日"
-        let testDataDictionary5 = [InputViewController.HEIGHT_KEY: "160.4", InputViewController.WEIGHT_KEY: "55.4", InputViewController.BMI_KEY: "21.53", InputViewController.EXPLANATION_KEY: "12月1日目です。"]
+        let sectionKey3 = "2019年12月"
+        let testDataDictionary5 = [InputViewController.DATE_KEY: "3日", InputViewController.HEIGHT_KEY: "160.4", InputViewController.WEIGHT_KEY: "55.4", InputViewController.BMI_KEY: "21.53", InputViewController.EXPLANATION_KEY: "12月1日目です。"]
         
-        let testDataKey6 = "2019年12月8日"
-        let testDataDictionary6 = [InputViewController.HEIGHT_KEY: "160.5", InputViewController.WEIGHT_KEY: "55.5", InputViewController.BMI_KEY: "21.54", InputViewController.EXPLANATION_KEY: "12月2日目です。"]
+//        let testDataKey6 = "2019年12月8日"
+        let testDataDictionary6 = [InputViewController.DATE_KEY: "8日", InputViewController.HEIGHT_KEY: "160.5", InputViewController.WEIGHT_KEY: "55.5", InputViewController.BMI_KEY: "21.54", InputViewController.EXPLANATION_KEY: "12月2日目です。"]
         
-        UserDefaults.standard.set(testDataDictionary1, forKey: testDataKey1)
-        UserDefaults.standard.set(testDataDictionary2, forKey: testDataKey2)
-        UserDefaults.standard.set(testDataDictionary3, forKey: testDataKey3)
-        UserDefaults.standard.set(testDataDictionary4, forKey: testDataKey4)
-        UserDefaults.standard.set(testDataDictionary5, forKey: testDataKey5)
-        UserDefaults.standard.set(testDataDictionary6, forKey: testDataKey6)
+        let testDataSectionArray = [sectionKey1, sectionKey2, sectionKey3]
+        let testDataDictionaryArray1 = [testDataDictionary1, testDataDictionary2]
+        let testDataDictionaryArray2 = [testDataDictionary3, testDataDictionary4]
+        let testDataDictionaryArray3 = [testDataDictionary5, testDataDictionary6]
+        
+        UserDefaults.standard.set(testDataSectionArray, forKey: InputViewController.MONTH_LIST_KEY)
+        UserDefaults.standard.set(testDataDictionaryArray1, forKey: sectionKey1)
+        UserDefaults.standard.set(testDataDictionaryArray2, forKey: sectionKey2)
+        UserDefaults.standard.set(testDataDictionaryArray3, forKey: sectionKey3)
     }
     
     // 入力エリア以外をタップするとキーボードを閉じる
@@ -115,7 +128,9 @@ class InputViewController: UIViewController {
     private func bmiCalculate(heightCm: Double, weight: Double) -> Double {
         let heightM = heightCm / 100
         let bmi = weight / pow(heightM, 2)
-        return bmi
+        
+        // 小数点第二位以下を丸める
+        return round(bmi * 10) / 10
     }
     
     private func showAlertDialog(title: String, message: String) {
