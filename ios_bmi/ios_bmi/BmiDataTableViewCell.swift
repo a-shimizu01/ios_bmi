@@ -14,7 +14,7 @@ class BmiDataTableViewCell: UITableViewCell {
     @IBOutlet weak var heightLabel: UILabel!
     @IBOutlet weak var weightLabel: UILabel!
     @IBOutlet weak var bmiLabel: UILabel!
-    @IBOutlet weak var explanationTextView: UITextView!
+    @IBOutlet weak var explanationTextView: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

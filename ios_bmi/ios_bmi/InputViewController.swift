@@ -29,7 +29,7 @@ class InputViewController: UIViewController {
         super.viewDidLoad()
         
         // テスト用データ登録
-        saveBmiTestData()
+//        saveBmiTestData()
         // Do any additional setup after loading the view, typically from a nib.
     }
 
@@ -67,27 +67,70 @@ class InputViewController: UIViewController {
 //        showAlertDialog(title: "エラー", message: "BMI値が未入力です。")
         
         // 現在日付取得
-        let formatterMonth = DateFormatter()
-        formatterMonth.dateFormat = "yyyy年M月"
-        let todayMonthStr = formatterMonth.string(from: Date())
+        let dateformatter = DateFormatter()
+        dateformatter.dateFormat = "yyyy年M月"
+        let todayMonthStr = dateformatter.string(from: Date())
         
-        formatterMonth.dateFormat = "d日"
-        let todayDateStr = formatterMonth.string(from: Date())
+        dateformatter.dateFormat = "d日"
+        let todayDateStr = dateformatter.string(from: Date())
         
         // データ保存用Dictionary
         let dataDictionary = [InputViewController.DATE_KEY: todayDateStr, InputViewController.HEIGHT_KEY: textFieldHeight.text ?? "", InputViewController.WEIGHT_KEY: textFieldWeight.text ?? "", InputViewController.BMI_KEY: labelBmiValue.text ?? "", InputViewController.EXPLANATION_KEY: textViewExplanation.text ?? ""]
         
         if var thisMonthDataArray = UserDefaults.standard.array(forKey: todayMonthStr) as? [[String: String]] {
-            // 今月のデータがすでに登録済みの場合は、データを追加して上書き登録する
-            thisMonthDataArray += [dataDictionary]
-            UserDefaults.standard.set(thisMonthDataArray, forKey: todayMonthStr)
+            // 今月のデータがすでに登録済みの場合は、今月のデータに追加、もしくは上書きして今月のデータを再登録
+            if (existDateData(monthDataArray: thisMonthDataArray, dateStr: todayDateStr)) {
+                // 今日のデータが登録済みの場合は上書き
+                if let todayData = getDateDataFromMonthDataArray(monthDataArray: thisMonthDataArray, dateStr: todayDateStr),
+                    let index = thisMonthDataArray.index(of: todayData) {
+                    
+                    thisMonthDataArray.remove(at: index)
+                    thisMonthDataArray.insert(dataDictionary, at: index)
+                    UserDefaults.standard.set(thisMonthDataArray, forKey: todayMonthStr)
+                }
+                
+            } else {
+                // 今日のデータが未登録の場合は追加
+                thisMonthDataArray += [dataDictionary]
+                UserDefaults.standard.set(thisMonthDataArray, forKey: todayMonthStr)
+            }
+            
         } else {
             // 登録済みでない場合は新規登録する
             UserDefaults.standard.set([dataDictionary], forKey: todayMonthStr)
+            
+            // セクションリストにも今月を追加する
+            if var monthArray = UserDefaults.standard.array(forKey: InputViewController.MONTH_LIST_KEY) as? [String] {
+                    monthArray += [todayMonthStr]
+                    UserDefaults.standard.set(monthArray, forKey: InputViewController.MONTH_LIST_KEY)
+            } else {
+                // 登録済みでない場合は新規登録する
+                UserDefaults.standard.set([todayMonthStr], forKey: InputViewController.MONTH_LIST_KEY)
+            }
         }
         
         // アラートダイアログ エラーで落ちるので一旦保留）（保存しましたってダイアログ出るようにしたいなぁ）
         labelBmiValue.text = "保存完了"
+    }
+    
+    // 一月分のデータに指定した日付のデータが含まれているか判定する
+    func existDateData (monthDataArray: [[String: String]], dateStr: String) -> Bool {
+        if getDateDataFromMonthDataArray(monthDataArray: monthDataArray, dateStr: dateStr) != nil {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    // 一月分のデータのうち指定した日付のデータがあれば取得する
+    func getDateDataFromMonthDataArray (monthDataArray: [[String: String]], dateStr: String) -> [String: String]? {
+        for dateData in monthDataArray {
+            if dateData[InputViewController.DATE_KEY] == dateStr {
+                return dateData
+            }
+        }
+    
+        return nil
     }
     
     // テスト用メソッド 複数件のBMI計算結果のテストデータを保存する
