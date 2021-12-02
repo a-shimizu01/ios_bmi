@@ -123,14 +123,14 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="IYP-I6-tU4"/>
                     </view>
-                    <tabBarItem key="tabBarItem" systemItem="history" id="toI-lk-zf6"/>
+                    <navigationItem key="navigationItem" id="sPs-4N-Bpb"/>
                     <connections>
                         <outlet property="bmiDataTableView" destination="rQb-p7-FAM" id="LDq-CS-Sf2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iu9-VD-2tS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-711.20000000000005" y="125.4872563718141"/>
+            <point key="canvasLocation" x="228" y="125.4872563718141"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="8am-nI-n2c">
@@ -140,10 +140,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="image" keyPath="selectedImage" value="person.badge.plus"/>
+                            <userDefinedRuntimeAttribute type="image" keyPath="selectedImage" value="doc"/>
+                        </userDefinedRuntimeAttributes>
                     </tabBar>
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="ocO-ht-hxW"/>
-                        <segue destination="qL1-Eb-o09" kind="relationship" relationship="viewControllers" id="8or-qX-wl9"/>
+                        <segue destination="VeQ-oT-zgu" kind="relationship" relationship="viewControllers" id="ocO-ht-hxW"/>
+                        <segue destination="gdr-5c-vGF" kind="relationship" relationship="viewControllers" id="8or-qX-wl9"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Sg3-Ei-EkN" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -259,7 +263,7 @@
                             <outletCollection property="gestureRecognizers" destination="hLF-37-ch8" appends="YES" id="JNF-aT-7me"/>
                         </connections>
                     </view>
-                    <tabBarItem key="tabBarItem" systemItem="favorites" id="h6M-DM-CDn"/>
+                    <navigationItem key="navigationItem" id="hf7-Wn-xp7"/>
                     <connections>
                         <outlet property="labelBmiValue" destination="dE0-85-gjh" id="0Er-xu-lhl"/>
                         <outlet property="textFieldHeight" destination="xpb-FW-svo" id="Hk1-Qc-OlT"/>
@@ -274,7 +278,59 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-711" y="-566"/>
+            <point key="canvasLocation" x="228" y="-566.26686656671666"/>
+        </scene>
+        <!--入力-->
+        <scene sceneID="v1h-5r-arA">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="VeQ-oT-zgu" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="入力" image="person.badge.plus" catalog="system" landscapeImage="person.badge.plus" largeContentSizeImage="person.badge.plus" selectedImage="person.badge.plus" id="h6M-DM-CDn">
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="image" keyPath="selectedImage" value="person.badge.plus"/>
+                        </userDefinedRuntimeAttributes>
+                    </tabBarItem>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="GAY-g2-V4P">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="nvm-aA-5eD"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="E4U-pR-qFI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-711.20000000000005" y="-566.26686656671666"/>
+        </scene>
+        <!--履歴-->
+        <scene sceneID="Nxh-ym-DtG">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="gdr-5c-vGF" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="履歴" image="doc" catalog="system" landscapeImage="doc" largeContentSizeImage="doc" selectedImage="doc" id="toI-lk-zf6">
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="image" keyPath="selectedImage" value="doc"/>
+                        </userDefinedRuntimeAttributes>
+                    </tabBarItem>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="THp-0L-Tg1">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="qL1-Eb-o09" kind="relationship" relationship="rootViewController" id="hxY-WW-evn"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Jyr-OZ-Sms" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-711.20000000000005" y="125.4872563718141"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="doc" catalog="system" width="56" height="64"/>
+        <image name="doc" width="16" height="16"/>
+        <image name="person.badge.plus" width="16" height="16"/>
+        <image name="person.badge.plus" catalog="system" width="64" height="58"/>
+    </resources>
 </document>

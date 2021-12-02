@@ -10,6 +10,8 @@ import UIKit
 
 class ListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    static let PAGE_TITLE = "履歴"
+    
     @IBOutlet weak var bmiDataTableView: UITableView!
     private let BMI_DATA_TABLE_CELL_IDENTIFIER = "bmiDataTableViewCell"
     
@@ -18,9 +20,17 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // ヘッダータイトル設定
+        self.navigationItem.title = ListViewController.PAGE_TITLE
+        
         bmiDataTableView.estimatedRowHeight = 100
         bmiDataTableView.rowHeight = UITableView.automaticDimension
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        bmiDataTableView.reloadData()
+        super.viewWillAppear(animated)
     }
     
     /// リスト表示関連処理

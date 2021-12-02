@@ -9,6 +9,8 @@
 import UIKit
 
 class InputViewController: UIViewController {
+    
+    static let PAGE_TITLE = "入力"
 
     @IBOutlet weak var textFieldHeight: UITextField!
     @IBOutlet weak var textFieldWeight: UITextField!
@@ -28,6 +30,9 @@ class InputViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // ヘッダータイトル設定
+        self.navigationItem.title = InputViewController.PAGE_TITLE
+        
         // テスト用データ登録
 //        saveBmiTestData()
         // Do any additional setup after loading the view, typically from a nib.
@@ -35,6 +40,14 @@ class InputViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
+        let dialog = UIAlertController(title: "テスト", message: "メッセージ出た", preferredStyle: .alert)
+        dialog.addAction(UIAlertAction(title: "OK",  style: .cancel, handler: nil))
+        dialog.present(dialog,animated: true, completion: nil)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
     }
     
     @IBAction func bmiCalculateButtonTouchDown(_ sender: UIButton) {
@@ -58,6 +71,47 @@ class InputViewController: UIViewController {
         textFieldWeight.text = ""
         labelBmiValue.text = ""
         textViewExplanation.text = textViewDefaultStr
+        
+        // TODO 要動作確認
+        deleteTodayData()
+    }
+    
+    func deleteTodayData() {
+        // 現在日付取得
+        let dateformatter = DateFormatter()
+        dateformatter.dateFormat = "yyyy年M月"
+        let todayMonthStr = dateformatter.string(from: Date())
+        
+        dateformatter.dateFormat = "d日"
+        let todayDateStr = dateformatter.string(from: Date())
+        
+        // セクション配列
+        var monthListArray = UserDefaults.standard.array(forKey: InputViewController.MONTH_LIST_KEY) as? [String] ?? []
+        
+        if let thisMonthSectionIndex = monthListArray.index(of: todayMonthStr),
+            var thisMonthDataArray = UserDefaults.standard.array(forKey: todayMonthStr) as? [[String: String]],
+            let todayData = getDateDataFromMonthDataArray(monthDataArray: thisMonthDataArray, dateStr: todayMonthStr),
+            let todayDataIndex = thisMonthDataArray.index(of: todayData){
+            
+            if thisMonthDataArray.count == 1 {
+                
+                // 今月のデータリストを削除
+                UserDefaults.standard.removeObject(forKey: todayMonthStr)
+                
+                // セクション配列から今月のセクションを削除
+                monthListArray.remove(at: thisMonthSectionIndex)
+                UserDefaults.standard.set(monthListArray, forKey: InputViewController.MONTH_LIST_KEY)
+                
+            } else {
+                
+                // 今月のデータリストから今日のデータを削除
+                thisMonthDataArray.remove(at: todayDataIndex)
+                UserDefaults.standard.set(thisMonthDataArray, forKey: todayMonthStr)
+                
+            }
+            
+        }
+        
     }
     
     
@@ -115,11 +169,7 @@ class InputViewController: UIViewController {
     
     // 一月分のデータに指定した日付のデータが含まれているか判定する
     func existDateData (monthDataArray: [[String: String]], dateStr: String) -> Bool {
-        if getDateDataFromMonthDataArray(monthDataArray: monthDataArray, dateStr: dateStr) != nil {
-            return true
-        } else {
-            return false
-        }
+        return getDateDataFromMonthDataArray(monthDataArray: monthDataArray, dateStr: dateStr) != nil
     }
     
     // 一月分のデータのうち指定した日付のデータがあれば取得する
